@@ -10,12 +10,12 @@ import { thirdweb } from "../assets";
 const CampaignDetails = () => {
 	const { state } = useLocation();
 	const navigate = useNavigate();
-	const { donate, getDonations, contract, address} =
+	const { donate, getDonations, contract, address, getUserCampaigns } =
 		useStateContext();
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [amount, setAmount] = useState("");
-	// const [totCamp, settotCamp] = useState(0);
+	const [totCamp, settotCamp] = useState(0);
 	const [donators, setDonators] = useState([]);
 
 	const remainingDays = daysLeft(state.deadline);
@@ -26,8 +26,14 @@ const CampaignDetails = () => {
 		setDonators(data);
 	};
 
+	const gettoatalCampaigns = async () => {
+		const data = await getUserCampaigns();
+		settotCamp(data.length);
+	};
+
 	useEffect(() => {
 		if (contract) fetchDonators();
+		gettoatalCampaigns();
 	}, [contract, address]);
 
 	const handleDonate = async () => {
@@ -94,7 +100,7 @@ const CampaignDetails = () => {
 									{state.owner}
 								</h4>
 								<p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">
-									{"10"}
+									Created {totCamp} Campaings
 								</p>
 							</div>
 						</div>
