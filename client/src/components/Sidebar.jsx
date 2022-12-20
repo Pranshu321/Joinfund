@@ -1,7 +1,7 @@
 import { useDisconnect } from "@thirdweb-dev/react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { logo, sun } from "../assets";
+import { logo, sun, logout } from "../assets";
 import { navlinks } from "../constants";
 
 const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
@@ -26,7 +26,7 @@ const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
 );
 
 const Sidebar = () => {
-    const disconnect = useDisconnect({reconnectPrevious: true});
+	const disconnect = useDisconnect({ reconnectPrevious: true });
 	const navigate = useNavigate();
 	const [isActive, setIsActive] = useState("dashboard");
 
@@ -56,13 +56,15 @@ const Sidebar = () => {
 							}}
 						/>
 					))}
+					<Icon
+						name={"logout"}
+						imgUrl={logout}
+						isActive={isActive}
+						handleClick={disconnect}
+					/>
 				</div>
 
-				<Icon
-					styles="bg-[#1c1c24] shadow-secondary"
-					handleClick={disconnect}
-					imgUrl={sun}
-				/>
+				<Icon styles="bg-[#1c1c24] shadow-secondary" imgUrl={sun} />
 			</div>
 		</div>
 	);
